@@ -3,123 +3,124 @@ ID: cap_proeject
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: cap_proeject-srv
-  type: nodejs
-  path: gen/srv
-  requires:
-  - name: cap_proeject-auth
-  - name: cap_proeject-db
-  - name: cap_proeject-connectivity
-  - name: cap_proeject-destination
-  provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-    instances: 1
-  build-parameters:
-    builder: npm-ci
-- name: cap_proeject-db-deployer
-  type: hdb
-  path: gen/db
-  requires:
-  - name: cap_proeject-db
-  parameters:
-    buildpack: nodejs_buildpack
-- name: cap_proeject
-  type: approuter.nodejs
-  path: app/router
-  requires:
-  - name: srv-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: srv-api
-      url: ~{srv-url}
-  - name: cap_proeject-auth
-  - name: cap_proeject-destination
-  provides:
-  - name: app-api
-    properties:
-      app-protocol: ${protocol}
-      app-uri: ${default-uri}
-  parameters:
-    disk-quota: 256M
-    keep-existing-routes: true
-    memory: 256M
-- name: cap_proeject-app-content
-  type: com.sap.application.content
-  path: .
-  requires:
-  - name: cap_proeject-repo-host
-    parameters:
-      content-target: true
-  build-parameters:
-    build-result: resources
+  - name: cap_proeject-srv
+    type: nodejs
+    path: gen/srv
     requires:
-    - artifacts:
-      - wisysdashboard.zip
-      name: wisysdashboard
-      target-path: resources/
-- name: wisysdashboard
-  type: html5
-  path: app/dashboard
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+      - name: cap_proeject-auth
+      - name: cap_proeject-db
+      - name: cap_proeject-connectivity
+      - name: cap_proeject-destination
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+  - name: cap_proeject-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: cap_proeject-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: cap_proeject
+    type: approuter.nodejs
+    path: app/router
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          name: srv-api
+          url: ~{srv-url}
+      - name: cap_proeject-auth
+      - name: cap_proeject-destination
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+    parameters:
+      disk-quota: 256M
+      keep-existing-routes: true
+      memory: 256M
+  - name: cap_proeject-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: cap_proeject-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - wisysdashboard.zip
+          name: wisysdashboard
+          target-path: resources/
+  - name: wisysdashboard
+    type: html5
+    path: app/dashboard
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
 resources:
-- name: cap_proeject-auth
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      tenant-mode: dedicated
-      xsappname: cap_proeject-${org}-${space}
-    path: ./xs-security.json
-    service: xsuaa
-    service-plan: application
-- name: cap_proeject-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-- name: cap_proeject-connectivity
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: connectivity
-    service-plan: lite
-- name: cap_proeject-destination
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-    service: destination
-    service-plan: lite
-- name: cap_proeject-repo-host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: cap_proeject-html5-service
-    service-plan: app-host
+  - name: cap_proeject-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        tenant-mode: dedicated
+        xsappname: cap_proeject-${org}-${space}
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+  - name: cap_proeject-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: cap_proeject-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+  - name: cap_proeject-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+      service: destination
+      service-plan: lite
+  - name: cap_proeject-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: cap_proeject-html5-service
+      service-plan: app-host
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npm ci
-    - npx cds build --production
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
