@@ -1,0 +1,265 @@
+<mvc:View
+	controllerName="wisys.frontend.app.setting.master_data.Home"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+>
+	<SplitContainer
+		id="SplitContDemo"
+		initialDetail="detail"
+		initialMaster="master"
+	>
+		<detailPages>
+			<Page
+				id="detail1"
+				showHeader="false"
+				backgroundDesign="Solid"
+				showNavButton="{= !${device>/system/desktop} }"
+				class="sapUiResponsiveContentPadding"
+			>
+				<l:VerticalLayout width="100%">
+					<MessageStrip
+						type="Warning"
+						showIcon="true"
+						text="Modifications here will directly impact employee creation and updates please verify all inputs for accuracy, as every action is recorded and monitored."
+						class="sapUiTinyMarginBottom"
+					/>
+					<Table
+						id="tableid"
+						sticky="ColumnHeaders,HeaderToolbar"
+						growing="true"
+						items="{
+							path: 'detailData>/businessUnitData'
+						}"
+					>
+						<headerToolbar>
+							<Toolbar>
+								<Title text="{= 'Business Unit (' + ${detailData>/businessUnitData}.length})" />
+								<ToolbarSpacer />
+								<Button
+									icon="sap-icon://add"
+									type="Emphasized"
+									text="New Record"
+									press="onAddBusinessUnitRow"
+								/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="ID" />
+							</Column>
+							<Column>
+								<Text text="Name" />
+							</Column>
+							<Column>
+								<Text text="Active/In-active" />
+							</Column>
+							<Column>
+								<Text text="" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle">
+								<cells>
+									<Label
+										design="Bold"
+										text="{detailData>BusinessUnitId}"
+									/>
+									<Label
+										design="Bold"
+										text="{detailData>BusinessUnitName}"
+									/>
+									<Switch
+										enabled="false"
+										type="AcceptReject"
+										state="{detailData>ActiveFlag}"
+									/>
+									<Button
+										icon="sap-icon://edit"
+										text="Edit"
+										press="onEditBusinessUnit"
+										class="sapUiSmallMarginEnd"
+										type="Neutral"
+									/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</l:VerticalLayout>
+			</Page>
+			<Page
+				id="detail2"
+				showHeader="false"
+				backgroundDesign="Solid"
+				showNavButton="{= !${device>/system/desktop} }"
+				class="sapUiResponsiveContentPadding"
+			>
+				<MessageStrip
+					type="Warning"
+					showIcon="true"
+					text="Modifications here will directly impact employee creation and updates please verify all inputs for accuracy, as every action is recorded and monitored."
+					class="sapUiTinyMarginBottom"
+				/>
+				<l:VerticalLayout width="100%">
+					<Table
+						items="{detailData>/siteData}"
+						id="detailTable2"
+						sticky="ColumnHeaders,HeaderToolbar"
+						growing="true"
+					>
+						<headerToolbar>
+							<Toolbar>
+								<Title text="{= 'Sites (' + ${detailData>/siteData}.length})" />
+								<ToolbarSpacer />
+								<Button
+									icon="sap-icon://add"
+									type="Emphasized"
+									text="New Record"
+									press="onAddSitesRow"
+								/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="ID" />
+							</Column>
+							<Column>
+								<Text text="Name" />
+							</Column>
+							<Column>
+								<Text text="Active/In-active" />
+							</Column>
+							<Column>
+								<Text text="" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle">
+								<cells>
+									<Label
+										design="Bold"
+										text="{detailData>SiteId}"
+									/>
+									<Label
+										design="Bold"
+										text="{detailData>SiteName}"
+									/>
+									<Switch
+										enabled="false"
+										type="AcceptReject"
+										state="{detailData>ActiveFlag}"
+									/>
+									<Button
+										icon="sap-icon://edit"
+										text="Edit"
+										press="onEditSites"
+										class="sapUiSmallMarginEnd"
+										type="Neutral"
+									/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</l:VerticalLayout>
+			</Page>
+			<Page
+				id="detail3"
+				showHeader="false"
+				backgroundDesign="Solid"
+				showNavButton="{= !${device>/system/desktop} }"
+				navButtonPress=".onPressDetailBack"
+				class="sapUiResponsiveContentPadding"
+			>
+				<l:VerticalLayout width="100%">
+					<MessageStrip
+						type="Warning"
+						showIcon="true"
+						text="Modifications here will directly impact employee creation and updates please verify all inputs for accuracy, as every action is recorded and monitored."
+						class="sapUiTinyMarginBottom"
+					/>
+					<Table
+						id="detailTable3"
+						sticky="ColumnHeaders,HeaderToolbar"
+						growing="true"
+						items="{
+							path: 'detailData>/positionData'
+						}"
+					>
+						<headerToolbar>
+							<Toolbar>
+								<Title text="{= 'Positions (' + ${detailData>/positionData}.length})" />
+								<ToolbarSpacer />
+								<Button
+									icon="sap-icon://add"
+									type="Emphasized"
+									text="New Record"
+									press="onAddPositionRow"
+								/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="ID" />
+							</Column>
+							<Column>
+								<Text text="Name" />
+							</Column>
+							<Column>
+								<Text text="Active/In-active" />
+							</Column>
+							<Column>
+								<Text text="" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem vAlign="Middle">
+								<cells>
+									<Label
+										design="Bold"
+										text="{detailData>PositionId}"
+									/>
+									<Label
+										design="Bold"
+										text="{detailData>PositionName}"
+									/>
+									<Switch
+										enabled="false"
+										type="AcceptReject"
+										state="{detailData>ActiveFlag}"
+									/>
+									<Button
+										icon="sap-icon://edit"
+										text="Edit"
+										press="onEditPosition"
+										class="sapUiSmallMarginEnd"
+										type="Neutral"
+									/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</l:VerticalLayout>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page
+				id="master"
+				title="Master Data"
+				backgroundDesign="List"
+			>
+				<List
+					noDataText="Fetching data ..."
+					items="{masterPages>/}"
+					mode="SingleSelectMaster"
+					selectionChange="onHandleListItem"
+				>
+					<items>
+						<StandardListItem title="{masterPages>name}" />
+					</items>
+				</List>
+			</Page>
+		</masterPages>
+	</SplitContainer>
+</mvc:View>

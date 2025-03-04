@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog state="Error">
+        <content>
+            <IllustratedMessage
+                illustrationSize="Auto"
+                illustrationType="sapIllus-EmptyList"
+                title="Access Denied"
+                description="Please contact the SAP Basis team for access permissions."
+            />
+        </content>
+    </Dialog>
+</core:FragmentDefinition>

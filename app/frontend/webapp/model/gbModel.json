@@ -1,0 +1,134 @@
+{
+    "status": [
+        {
+            "name": "Active",
+            "key": "0"
+        },
+        {
+            "name": "InActive",
+            "key": "1"
+        }
+    ],
+    "optionData": [
+        {
+            "name": "Business Unit",
+            "key": "1",
+            "visible": true,
+            "tableId": "table1"
+        },
+        {
+            "name": "Site",
+            "key": "2",
+            "visible": false,
+            "tableId": "table2"
+        },
+        {
+            "name": "Position",
+            "key": "3",
+            "visible": false,
+            "tableId": "table3"
+        }
+    ],
+    "getEmployeeData": [
+        {
+            "EmpId": "E001",
+            "EmpIqama": "123456789",
+            "EmpFirstName": "John",
+            "EmpMiddleName": "M.",
+            "EmpLastName": "Doe",
+            "Profession": "Software Engineer",
+            "SupplierName": "Tech Solutions",
+            "SupplierCode": "TS001",
+            "BusinessUnitValue": "IT",
+            "SiteValue": "Riyadh",
+            "BlackList": "0",
+            "Day": "Monday",
+            "intime": "08:00 AM",
+            "outTime": "05:00 PM",
+            "ActiveFlag": "0",
+            "totalHours": "9",
+            "Dates": "2024-07-01",
+            "SequenceNumber": "1"
+        },
+        {
+            "EmpId": "E002",
+            "EmpIqama": "987654321",
+            "EmpFirstName": "Jane",
+            "EmpMiddleName": "A.",
+            "EmpLastName": "Smith",
+            "Profession": "Project Manager",
+            "SupplierName": "Business Corp",
+            "SupplierCode": "BC002",
+            "BusinessUnitValue": "Management",
+            "SiteValue": "Haradh",
+            "BlackList": "1",
+            "Day": "Tuesday",
+            "intime": "09:00 AM",
+            "outTime": "06:00 PM",
+            "ActiveFlag": "0",
+            "totalHours": "9",
+            "Dates": "2024-07-02",
+            "SequenceNumber": "2"
+        },
+        {
+            "EmpId": "E003",
+            "EmpIqama": "111222333",
+            "EmpFirstName": "Alice",
+            "EmpMiddleName": "B.",
+            "EmpLastName": "Johnson",
+            "Profession": "Analyst",
+            "SupplierName": "Data Insights",
+            "SupplierCode": "DI003",
+            "BusinessUnitValue": "Analysis",
+            "SiteValue": "Riyadh",
+            "BlackList": "0",
+            "Day": "Wednesday",
+            "intime": "07:00 AM",
+            "outTime": "04:00 PM",
+            "ActiveFlag": "0",
+            "totalHours": "9",
+            "Dates": "2024-07-03",
+            "SequenceNumber": "3"
+        },
+        {
+            "EmpId": "E004",
+            "EmpIqama": "444555666",
+            "EmpFirstName": "Bob",
+            "EmpMiddleName": "C.",
+            "EmpLastName": "Brown",
+            "Profession": "Designer",
+            "SupplierName": "Creative Studio",
+            "SupplierCode": "CS004",
+            "BusinessUnitValue": "Design",
+            "SiteValue": "Haradh",
+            "BlackList": "1",
+            "Day": "Thursday",
+            "intime": "10:00 AM",
+            "outTime": "07:00 PM",
+            "ActiveFlag": "0",
+            "totalHours": "9",
+            "Dates": "2024-07-04",
+            "SequenceNumber": "4"
+        },
+        {
+            "EmpId": "E005",
+            "EmpIqama": "777888999",
+            "EmpFirstName": "Charlie",
+            "EmpMiddleName": "D.",
+            "EmpLastName": "Green",
+            "Profession": "Consultant",
+            "SupplierName": "Consulting Group",
+            "SupplierCode": "CG005",
+            "BusinessUnitValue": "Consulting",
+            "SiteValue": "Riyadh",
+            "BlackList": "0",
+            "Day": "Friday",
+            "intime": "06:00 AM",
+            "outTime": "03:00 PM",
+            "ActiveFlag": "0",
+            "totalHours": "9",
+            "Dates": "2024-07-05",
+            "SequenceNumber": "5"
+        }
+    ]
+}
