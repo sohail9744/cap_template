@@ -275,6 +275,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "thirdPartyNew"
+    "service": "cap_proeject"
   }
 }

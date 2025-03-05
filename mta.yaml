@@ -1,53 +1,70 @@
 _schema-version: 3.3.0
 ID: cap_proeject
-description: A simple CAP project.
+description: Combined UI5 and CAP project.
 version: 1.0.0
+
 modules:
+  # Backend Service (CAP)
   - name: cap_proeject-srv
     type: nodejs
     path: gen/srv
     requires:
-      - name: cap_proeject-auth
+      - name: cap_proeject-destination-service
       - name: cap_proeject-db
+      - name: cap_proeject-xsuaa-srv
       - name: cap_proeject-connectivity
-      - name: cap_proeject-destination
     provides:
       - name: srv-api
         properties:
           srv-url: ${default-url}
     parameters:
       buildpack: nodejs_buildpack
-      instances: 1
+      readiness-health-check-http-endpoint: /health
+      readiness-health-check-type: http
     build-parameters:
-      builder: npm-ci
+      builder: npm
+
+  # Database Deployer
   - name: cap_proeject-db-deployer
     type: hdb
     path: gen/db
-    requires:
-      - name: cap_proeject-db
     parameters:
       buildpack: nodejs_buildpack
-  - name: cap_proeject
+    requires:
+      - name: cap_proeject-db
+
+  # Approuter
+  - name: cap_proeject-approuter
     type: approuter.nodejs
     path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
     requires:
       - name: srv-api
         group: destinations
         properties:
-          forwardAuthToken: true
           name: srv-api
           url: ~{srv-url}
-      - name: cap_proeject-auth
-      - name: cap_proeject-destination
-    provides:
-      - name: app-api
-        properties:
-          app-protocol: ${protocol}
-          app-uri: ${default-uri}
-    parameters:
-      disk-quota: 256M
-      keep-existing-routes: true
-      memory: 256M
+          forwardAuthToken: true
+      - name: cap_proeject-xsuaa-srv
+      - name: cap_proeject-destination-service
+
+  # Frontend (UI5)
+  - name: cap_proeject-frontend
+    type: html5
+    path: app/frontend
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+
+  # Frontend Content Deployment
   - name: cap_proeject-app-content
     type: com.sap.application.content
     path: .
@@ -59,45 +76,49 @@ modules:
       build-result: resources
       requires:
         - artifacts:
-            - wisysdashboard.zip
-          name: wisysdashboard
+            - cap_proeject.zip
+          name: cap_proeject-frontend
           target-path: resources/
-  - name: wisysdashboard
-    type: html5
-    path: app/dashboard
+
+  # Destination Content
+  - name: cap_proeject-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: cap_proeject-destination-service
+        parameters:
+          content-target: true
+      - name: cap_proeject-repo-host
+        parameters:
+          service-key:
+            name: cap_proeject-repo-host-key
+      - name: cap_proeject-xsuaa-srv
+        parameters:
+          service-key:
+            name: cap_proeject-uaa-key
+    parameters:
+      content:
+        instance:
+          destinations:
+            - Name: cap_proeject_html_repo_host
+              ServiceInstanceName: cap_proeject-html5-srv
+              ServiceKeyName: cap_proeject-repo-host-key
+              sap.cloud.service: cap_proeject
+            - Authentication: OAuth2UserTokenExchange
+              Name: cap_proeject_uaa
+              ServiceInstanceName: cap_proeject-xsuaa-srv
+              ServiceKeyName: cap_proeject-uaa-key
+              sap.cloud.service: cap_proeject
+          existing_destinations_policy: ignore
     build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms:
-        []
+      no-source: true
+
 resources:
-  - name: cap_proeject-auth
+  # Destination Service
+  - name: cap_proeject-destination-service
     type: org.cloudfoundry.managed-service
     parameters:
       config:
-        tenant-mode: dedicated
-        xsappname: cap_proeject-${org}-${space}
-      path: ./xs-security.json
-      service: xsuaa
-      service-plan: application
-  - name: cap_proeject-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-  - name: cap_proeject-connectivity
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: connectivity
-      service-plan: lite
-  - name: cap_proeject-destination
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        HTML5Runtime_enabled: false
+        HTML5Runtime_enabled: true
         init_data:
           instance:
             destinations:
@@ -106,15 +127,52 @@ resources:
                 ProxyType: Internet
                 Type: HTTP
                 URL: https://ui5.sap.com
+              - Authentication: NoAuthentication
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+                Name: cap_proeject-srv-api
+                ProxyType: Internet
+                Type: HTTP
+                URL: ~{srv-api/srv-url}
             existing_destinations_policy: update
+        version: 1.0.0
       service: destination
+      service-name: cap_proeject-destination-service
       service-plan: lite
+    requires:
+      - name: srv-api
+
+  # HTML5 App Repo Host
   - name: cap_proeject-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
-      service-name: cap_proeject-html5-service
+      service-name: cap_proeject-html5-srv
       service-plan: app-host
+
+  # HDI Container for Database
+  - name: cap_proeject-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+
+  # XSUAA Authentication Service
+  - name: cap_proeject-xsuaa-srv
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: cap_proeject
+        tenant-mode: dedicated
+  - name: cap_proeject-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

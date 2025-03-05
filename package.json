@@ -27,7 +27,8 @@
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
     "ui5-helper": "node ./node_modules/ui5-helper/dist/bundle.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint ./"
   },
   "sapux": [
     "app/admin-books",
