@@ -1,2 +1,0 @@
-"use strict";sap.ui.define(["sap/ui/core/mvc/Controller"],function(r){"use strict";const e=r.extend("wisys.dashboard.controller.Error.Error",{});return e});
-//# sourceMappingURL=Error.controller.js.map

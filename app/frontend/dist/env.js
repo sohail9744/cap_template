@@ -1,2 +1,0 @@
-"use strict";sap.ui.define([],function(){"use strict";const t=()=>({AppId:"3",mockEmail:"xyz@tyyy.com.sa",production:false});const e=t;var n={__esModule:true};n.getConfidentialInfo=e;return n});
-//# sourceMappingURL=env.js.map

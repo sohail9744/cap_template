@@ -1,2 +1,0 @@
-"use strict";sap.ui.define(["sap/ui/core/mvc/Controller","sap/ui/core/UIComponent"],function(t,e){"use strict";const o=t.extend("wisys.frontend.controller.Home",{onInit:function t(){this.router=e.getRouterFor(this)},onPressTile:function t(e){let o=e.getSource().getCustomData()[0];this.router.navTo(o.getKey())}});return o});
-//# sourceMappingURL=Home.controller.js.map
