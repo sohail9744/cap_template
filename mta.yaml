@@ -50,6 +50,11 @@ modules:
           forwardAuthToken: true
       - name: cap_proeject-xsuaa-srv
       - name: cap_proeject-destination-service
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
 
   # Frontend (UI5)
   - name: cap_proeject-frontend

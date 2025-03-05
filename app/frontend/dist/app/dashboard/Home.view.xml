@@ -1,0 +1,302 @@
+<mvc:View
+    controllerName="wisys.frontend.app.dashboard.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+        showHeader="false"
+        titleAlignment="Center"
+    >
+        <content>
+            <IconTabBar
+                id="idIconTabBar"
+                select="onFilterTable"
+            >
+                <items>
+                    <IconTabFilter
+                        icon="sap-icon://family-care"
+                        count="{lengthModel>/allEmployee}"
+                        text="Total Employees"
+                        key="all"
+                        tooltip="Total Employees"
+                    />
+                    <IconTabFilter
+                        icon="sap-icon://up"
+                        iconColor="Positive"
+                        count="{lengthModel>/active}"
+                        text="Active"
+                        key="active"
+                        tooltip="Active"
+                    />
+                    <IconTabFilter
+                        icon="sap-icon://down"
+                        iconColor="Neutral"
+                        count="{lengthModel>/inActive}"
+                        text="In Active"
+                        key="inactive"
+                        tooltip="InActive"
+                    />
+                    <IconTabFilter
+                        icon="sap-icon://cancel"
+                        iconColor="Negative"
+                        count="{lengthModel>/blackList}"
+                        text="BlackList"
+                        key="blacklist"
+                        tooltip="BlackList"
+                    />
+                    <IconTabFilter
+                        icon="sap-icon://card"
+                        iconColor="Negative"
+                        count="{lengthModel>/iqmah}"
+                        text="IQAMA Expiry"
+                        key="iqmaex"
+                        tooltip="IQAMA Expiry Date"
+                    />
+                    <IconTabFilter
+                        icon="sap-icon://credit-card"
+                        iconColor="Negative"
+                        count="{lengthModel>/healthCard}"
+                        text="Health Card Expiry"
+                        key="hcex"
+                        tooltip="Health Card Expiry Date"
+                    />
+                    <IconTabFilter
+                        icon="sap-icon://business-card"
+                        iconColor="Critical"
+                        count="{lengthModel>/ajeerExpiry}"
+                        text="Ajeer Expiry"
+                        key="ajeerex"
+                        tooltip="Ajeer expiry Date"
+                    />
+                </items>
+                <content>
+                    <Table
+                        id="employeeTable"
+                        showSeparators="Inner"
+                        headerText="Employee Details"
+                        items="{
+                            path: 'empData>/getEmployeeData',
+                            sorter: {
+                                path: 'empData>EmpId',
+                                descending: true
+                            }
+                        }"
+                        growingScrollToLoad="true"
+                        growing="true"
+                    >
+                        <headerToolbar>
+                            <Toolbar class="tool-bar">
+                                <content>
+                                    <!-- <MessageStrip
+                                        text="Default (Information) with default icon and close button ddddddddddddddddddddddddd"
+                                        showIcon="true"
+                                        class="sapUiSmallMarginTopBottom"
+                                        type="Warning"
+                                        customIcon="sap-icon://locked"
+                                    /> -->
+                                    <ToolbarSpacer />
+                                    <Button
+                                        tooltip="Sort"
+                                        icon="sap-icon://sort"
+                                        press="handleSortButtonPressed"
+                                    />
+                                    <Button
+                                        tooltip="Filter"
+                                        icon="sap-icon://filter"
+                                        press="handleFilterButtonPressed"
+                                    />
+                                    <Button
+                                        tooltip="Group"
+                                        icon="sap-icon://group-2"
+                                        press="handleGroupButtonPressed"
+                                    />
+                                    <ComboBox
+                                        id="idComboBox"
+                                        selectedKey="EmpId"
+                                        width="8%"
+                                    >
+                                        <core:Item
+                                            text="Employee ID"
+                                            key="EmpId"
+                                        />
+                                        <core:Item
+                                            text="IQAMA Number"
+                                            key="EmpIqama"
+                                        />
+                                        <core:Item
+                                            text="Full Name"
+                                            key="EmpFirstName"
+                                        />
+                                    </ComboBox>
+                                    <SearchField
+                                        width="15%"
+                                        placeholder="search"
+                                        liveChange="onSearch"
+                                    />
+                                    <Button
+                                        tooltip="Excel Export"
+                                        icon="sap-icon://excel-attachment"
+                                        press="onhandleExcelExport"
+                                    />
+                                </content>
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                width="5rem"
+                            >
+                                <Text text="Emp ID" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
+                                <Text text="IQAMA Number" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
+                                <Text text="Full Name" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
+                                <Text text="Profession" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                            >
+                                <Text text="Supplier Name" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                            >
+                                <Text text="Supplier Code" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                            >
+                                <Text text="Business Unit" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                            >
+                                <Text text="Site" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                                width="7rem"
+                            >
+                                <Text text="IQAMA Expiry Date" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                                width="5rem"
+                            >
+                                <Text text="Status" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                                width="5rem"
+                            >
+                                <Text text="Black List" />
+                            </Column>
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                                vAlign="Middle"
+                                hAlign="Center"
+                                width="3rem"
+                            >
+                                <Text text="" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem
+                                type="Navigation"
+                                press="onNavRecord"
+                            >
+                                <cells>
+                                    <Text text="{empData>EmpId}" />
+                                    <Text text="{empData>EmpIqama}" />
+                                    <Text text="{empData>EmpFirstName} {empData>EmpMiddleName} {empData>EmpLastName}" />
+                                    <Text text="{empData>Profession}" />
+                                    <Text text="{empData>SupplierName}" />
+                                    <Text text="{empData>SupplierCode}" />
+                                    <Text text="{empData>BusinessUnit/BusinessUnitName}" />
+                                    <Text text="{empData>Site/SiteName}" />
+                                    <DatePicker
+                                        displayFormat="dd-MM-yyyy"
+                                        value="{empData>IqamaValidityDate}"
+                                        editable="false"
+                                    />
+                                    <ObjectStatus
+                                        text="{= ${empData>ActiveFlag} ? 'Active' : 'In Active'}"
+                                        state="{= ${empData>ActiveFlag} ? 'Success' : 'Error'}"
+                                    />
+                                    <ObjectStatus
+                                        icon="{= ${empData>BlackList} ? 'sap-icon://cancel' : 'sap-icon://circle-task-2'}"
+                                        state="{= ${empData>BlackList} ? 'Error' : 'Success'}"
+                                    />
+                                    <!-- <FlexBox justifyContent="Center">
+                                        <Button
+                                            text="View"
+                                            type="Accept"
+                                            press="onViewRecord"
+                                            visible="true"
+                                        />
+                                        <Button
+                                            icon="sap-icon://edit"
+                                            type="Emphasized"
+                                            press="onNavRecord"
+                                            visible="{lock>/settings}"
+                                            class="sapUiTinyMarginBegin"
+                                        />
+                                    </FlexBox> -->
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <IllustratedMessage
+                        Id="illustrationMessage"
+                        title="Technical Issue"
+                        description="Check your internet connection. If that doesn't help, try reloading. If this doesn’t help either, contact your administrator."
+                        visible="false"
+                        illustrationType="sapIllus-ErrorScreen"
+                    />
+                </content>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>

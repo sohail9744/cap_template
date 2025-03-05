@@ -1,0 +1,306 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "wisys.frontend",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.15.2",
+            "toolsId": "5a0908e5-2076-4d9b-ba2e-bee387d71227"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/catalog/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "zthird_party_app_cap-manage": {
+                    "semanticObject": "zthird_party_app_cap",
+                    "action": "manage",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    }
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.129.2",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "wisys.frontend.i18n.i18n"
+                }
+            },
+            "navList": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "model/dashboardList.json"
+            },
+            "gbModel": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "model/gbModel.json"
+            },
+            "userModel": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "model/userData.json"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "wisys.frontend.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteHome",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetHome"
+                    ]
+                },
+                {
+                    "name": "RouteDashboard",
+                    "pattern": "dashboard",
+                    "target": [
+                        "TargetDashboard"
+                    ]
+                },
+                {
+                    "name": "RouteBulkUpload",
+                    "pattern": "bulkupload",
+                    "target": [
+                        "TargetBulkUpload"
+                    ]
+                },
+                {
+                    "name": "RouteEmployee",
+                    "pattern": "employee:id:",
+                    "target": [
+                        "TargetEmployee"
+                    ]
+                },
+                {
+                    "name": "RouteMyTask",
+                    "pattern": "mytask",
+                    "target": [
+                        "TargetMyTask"
+                    ]
+                },
+                {
+                    "name": "RouteSetting",
+                    "pattern": "setting",
+                    "target": [
+                        "TargetSetting"
+                    ]
+                },
+                {
+                    "name": "RouteAttendance",
+                    "pattern": "attendance",
+                    "target": [
+                        "TargetAttendance"
+                    ]
+                },
+                {
+                    "name": "RouteApprover",
+                    "pattern": "approver",
+                    "target": [
+                        "TargetApprover"
+                    ]
+                },
+                {
+                    "name": "RouteMasterData",
+                    "pattern": "masterdata",
+                    "target": [
+                        "TargetMasterData"
+                    ]
+                },
+                {
+                    "name": "RouteReassign",
+                    "pattern": "reassign",
+                    "target": [
+                        "TargetReassign"
+                    ]
+                },
+                {
+                    "name": "RouteRequestStatus",
+                    "pattern": "request_status",
+                    "target": [
+                        "TargetRequestStatus"
+                    ]
+                },
+                {
+                    "name": "RouteRequestForm",
+                    "pattern": "request_form/:id:",
+                    "target": [
+                        "TargetRequestForm"
+                    ]
+                },
+                {
+                    "name": "RouteError",
+                    "pattern": "error",
+                    "target": [
+                        "TargetRouteError"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetHome": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Home",
+                    "viewName": "Home"
+                },
+                "TargetRouteError": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "Error",
+                    "viewName": "Error"
+                },
+                "TargetDashboard": {
+                    "viewId": "Dashboard",
+                    "viewName": "Home",
+                    "viewPath": "wisys.frontend.app.dashboard"
+                },
+                "TargetBulkUpload": {
+                    "viewId": "Bulk_Upload",
+                    "viewName": "Home",
+                    "viewPath": "wisys.frontend.app.bulk_upload"
+                },
+                "TargetEmployee": {
+                    "viewId": "Employee",
+                    "viewName": "Home",
+                    "viewPath": "wisys.frontend.app.employee"
+                },
+                "TargetMyTask": {
+                    "viewId": "myTask",
+                    "viewName": "Home",
+                    "viewPath": "wisys.frontend.app.myTask"
+                },
+                "TargetSetting": {
+                    "viewId": "Setting",
+                    "viewName": "Home",
+                    "viewPath": "wisys.frontend.app.setting"
+                },
+                "TargetAttendance": {
+                    "viewId": "Attendance",
+                    "viewName": "Home",
+                    "transition": "fade",
+                    "viewPath": "wisys.frontend.app.timeAttendance"
+                },
+                "TargetReassign": {
+                    "viewId": "Reassign",
+                    "viewName": "Home",
+                    "transition": "fade",
+                    "viewPath": "wisys.frontend.app.setting.reassign"
+                },
+                "TargetMasterData": {
+                    "viewId": "MasterData",
+                    "viewName": "Home",
+                    "transition": "fade",
+                    "viewPath": "wisys.frontend.app.setting.master_data"
+                },
+                "TargetApprover": {
+                    "viewId": "Approver",
+                    "viewName": "Home",
+                    "transition": "fade",
+                    "viewPath": "wisys.frontend.app.setting.approver"
+                },
+                "TargetRequestStatus": {
+                    "viewId": "RequestStatus",
+                    "viewName": "Home",
+                    "transition": "fade",
+                    "viewPath": "wisys.frontend.app.request_status"
+                },
+                "TargetRequestForm": {
+                    "viewId": "RequestForm",
+                    "viewName": "Home",
+                    "transition": "fade",
+                    "viewPath": "wisys.frontend.app.requestForm"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "wisys.frontend.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "cap_proeject"
+    }
+}

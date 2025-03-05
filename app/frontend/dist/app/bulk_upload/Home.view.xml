@@ -1,0 +1,314 @@
+<mvc:View
+    controllerName="wisys.frontend.app.bulk_upload.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:u="sap.ui.unified"
+    xmlns:table="sap.ui.table"
+>
+    <Page showHeader="false">
+        <content>
+            <fb:FilterBar
+                id="filterbar"
+                useToolbar="false"
+                showGoOnFB="false"
+                showFilterConfiguration="false"
+            >
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem
+                        name="Choose Options"
+                        label="Choose Options"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <FlexBox>
+                                <u:FileUploader
+                                    id="fileUploader"
+                                    name="myFileUpload"
+                                    tooltip="Upload your file to the s4hana"
+                                    fileType="xlsx"
+                                    change="onFileUploaderChange"
+                                    class="sapUiTinyMarginEnd"
+                                />
+                                <Button
+                                    type="Reject"
+                                    press="onClearFile"
+                                    text="Clear"
+                                    icon="sap-icon://delete"
+                                />
+                            </FlexBox>
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        name="Search Field"
+                        label="Search Field"
+                        groupName="Group1"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <SearchField
+                                liveChange="onSearchFieldLiveChange"
+                                placeholder="Row Number"
+                                enabled="{= ${excelData>/}.length > 0}"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                    <fb:FilterGroupItem
+                        name=" "
+                        groupName="Group3"
+                        visibleInFilterBar="true"
+                    >
+                        <fb:control>
+                            <Button
+                                type="Emphasized"
+                                text="Download Excel Template"
+                                press="onDownloadExcel"
+                                icon="sap-icon://excel-attachment"
+                            />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+            <!-- <MessageStrip
+                text="If you don't have Excel file template please download it you can find in the top bar"
+                showIcon="true"
+                visible="{= ${excelData>/}.length === 0 ? true : false}"
+                type="Information"
+                customIcon="sap-icon://locked"
+            /> -->
+            <table:Table
+                id="idTable"
+                visible="{= ${excelData>/}.length === 0 ? false : true}"
+                visibleRowCount="9"
+                selectionMode="None"
+                rows="{excelData>/}"
+            >
+                <table:extension>
+                    <OverflowToolbar>
+                        <Title
+                            id="title"
+                            text="{= 'Total Employee (' + ${excelData>/}.length + ')'}"
+                        />
+                        <Button
+                            icon="sap-icon://alert"
+                            text="{= ${message>/}.length }"
+                            visible="{= ${message>/}.length > 0}"
+                            type="Reject"
+                            press="onMessagePopoverPress"
+                        />
+                    </OverflowToolbar>
+                </table:extension>
+                <table:columns>
+                    <table:Column width="60px">
+                        <Label text="Row Number" />
+                        <table:template>
+                            <Text text="{excelData>rowNum}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Business Unit" />
+                        <table:template>
+                            <Text text="{excelData>BusinessUnit}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Site Value" />
+                        <table:template>
+                            <Text text="{excelData>SiteValue}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Emp First Name" />
+                        <table:template>
+                            <Text text="{excelData>EmpFirstName}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Emp First Name Arabic" />
+                        <table:template>
+                            <Text text="{excelData>EmpFirstNameAr}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Emp phone number" />
+                        <table:template>
+                            <Text text="{excelData>EmpPhone}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Date Of Birth" />
+                        <table:template>
+                            <Text text="{excelData>DateOfBirth}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Employee Iqama" />
+                        <table:template>
+                            <Text text="{excelData>EmployeeIqama}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Iqama Validaty Date" />
+                        <table:template>
+                            <Text text="{excelData>IqamaValidityDate}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Profession" />
+                        <table:template>
+                            <Text text="{excelData>Profession}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Emp Start Date" />
+                        <table:template>
+                            <Text text="{excelData>EmpStartDate}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Position Value" />
+                        <table:template>
+                            <Text text="{excelData>PositionValue}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Ajeer Validity Date" />
+                        <table:template>
+                            <Text text="{excelData>AjeerValidityDate}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Health Card Num" />
+                        <table:template>
+                            <Text text="{excelData>HealthCardNum}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Health Card Validity Date" />
+                        <table:template>
+                            <Text text="{excelData>HealthCardValidityDate}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Requisition Num" />
+                        <table:template>
+                            <Text text="{excelData>RequisitionNum}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Rate Per Hour" />
+                        <table:template>
+                            <Text text="{excelData>RatePerHour}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Supplier Code" />
+                        <table:template>
+                            <Text text="{excelData>SupplierCode}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Supplier Name" />
+                        <table:template>
+                            <Text text="{excelData>SupplierName}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Supplier Phone" />
+                        <table:template>
+                            <Text text="{excelData>SupplierPhone}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Supplier Contract Num" />
+                        <table:template>
+                            <Text text="{excelData>SupplierContractNum}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Supplier Contract Start Date" />
+                        <table:template>
+                            <Text
+                                text="{excelData>SupplierContractStartDate}"
+                            />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Supplier Contract End Date" />
+                        <table:template>
+                            <Text text="{excelData>SupplierContractEndDate}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="OldEmpId" />
+                        <table:template>
+                            <Text text="{excelData>OldEmpId}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Shift Type" />
+                        <table:template>
+                            <Text text="{excelData>ShiftType}" />
+                        </table:template>
+                    </table:Column>
+                    <table:Column width="150px">
+                        <Label text="Line Manager" />
+                        <table:template>
+                            <Text text="{excelData>LineManager}" />
+                        </table:template>
+                    </table:Column>
+                    <!-- <table:Column width="150px">
+                            <Label text="" />
+                            <table:template>
+                                <Button
+                                    text="Delete"
+                                    type="Reject"
+                                    icon="sap-icon://delete"
+                                    tooltip="Delete"
+                                    press="onDeleteRow"
+                                />
+                            </table:template>
+                        </table:Column> -->
+                </table:columns>
+            </table:Table>
+            <IllustratedMessage
+                illustrationSize="Dialog"
+                illustrationType="sapIllus-UploadCollection"
+                visible="{= ${excelData>/}.length === 0 ? true : false}"
+                title="Browse the file"
+                description="please upload the file in top bar you browse it"
+            />
+            <!-- <FlexBox
+                class="sapUiMediumMarginTop"
+                justifyContent="Center"
+                alignItems="Center"
+            >
+                <Button
+                    id="idSumbitButton"
+                    text="Sumbit"
+                    type="Accept"
+                    press="onSubmitButton"
+                />
+            </FlexBox> -->
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="Sumbit"
+                    press="onSubmitButton"
+                    id="idSumbitButton"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
+                <ToolbarSpacer />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

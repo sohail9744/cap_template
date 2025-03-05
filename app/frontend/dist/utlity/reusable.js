@@ -1,0 +1,2 @@
+"use strict";sap.ui.define(["sap/ui/core/format/DateFormat"],function(e){"use strict";const t=t=>{let r;if(typeof t==="string"){const[e,a,n]=t.split("-").map(Number);r=new Date(n,a-1,e)}else if(t instanceof Date){r=t}else{throw new Error("Invalid input: Please provide a Date object or a valid date string.")}const a=e.getDateTimeInstance({pattern:"yyyy-MM-dd'T'HH:mm:ss'Z'",UTC:true});return a.format(r)};var r={__esModule:true};r.ConvertToISOFormat=t;return r});
+//# sourceMappingURL=reusable.js.map

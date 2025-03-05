@@ -1,0 +1,28 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Popover
+        id="myPopover"
+        title="{imageModel>/text}"
+        class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
+        placement="Bottom"
+        initialFocus="email"
+    >
+        <Image
+            src="{imageModel>/url}"
+            width="30em"
+            densityAware="true"
+        />
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    id="DownloadImage"
+                    text="Download"
+                    press="handleDownloadImagePress"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Popover>
+</core:FragmentDefinition>

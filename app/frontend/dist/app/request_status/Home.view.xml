@@ -1,0 +1,103 @@
+<mvc:View
+    controllerName="wisys.frontend.app.request_status.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true"
+    height="100%"
+    busyIndicatorDelay="0"
+>
+    <Page showHeader="false">
+        <content>
+            <MessageStrip
+                text="Click on the request in the table to see the more details of your request!"
+                showIcon="true"
+                class="sapUiTinyMargin"
+                showCloseButton="true"
+            />
+            <Table items="{
+                path: 'myRequest>/',
+                sorter: {
+                    path: 'createdAt',
+                    descending: true
+                }
+            }">
+                <columns>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Request id" />
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Request Date" />
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Site" />
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Month/Year" />
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Supplier Code" />
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Supplier Name" />
+                    </Column>
+                    <Column
+                        minScreenWidth="Tablet"
+                        demandPopin="true"
+                    >
+                        <Text text="Status" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem
+                        navigated="true"
+                        type="Navigation"
+                        vAlign="Middle"
+                        press="onTaskRowSelect"
+                    >
+                        <cells>
+                            <Text text="{myRequest>referenceId}" />
+                            <Text text="{
+                                path: 'myRequest>createdAt',
+                                formatter: '.f.dateFormat'
+                            }" />
+                            <Text text="{myRequest>site/SiteName} {myRequest>site/SiteId}" />
+                            <Text text="{myRequest>month}-{myRequest>year}" />
+                            <Text text="{myRequest>supplierCode}" />
+                            <Text text="{myRequest>supplierName}" />
+                            <ObjectStatus
+                                text="{myRequest>statusDisplay}"
+                                state="{
+                                    path: 'myRequest>statusDisplay',
+                                    formatter: '.f.statusFormat'
+                                }"
+                                icon="{
+                                    path: 'myRequest>statusDisplay',
+                                    formatter: '.f.iconFormat'
+                                }"
+                                inverted="true"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>
