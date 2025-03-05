@@ -35,6 +35,12 @@
     "app/browse"
   ],
   "cds": {
+    "fiori": {
+      "preview": true
+    },
+    "server": {
+      "index": true
+    },
     "requires": {
       "auth": "xsuaa",
       "connectivity": true,

@@ -6,23 +6,14 @@
       "name": "$XSAPPNAME.user",
       "description": "User scope",
       "grant-as-authority-to-apps": []
-    },
-    {
-      "name": "$XSAPPNAME.admin",
-      "description": "admin"
     }
   ],
-  "authorities": [
-    "$XSAPPNAME.user"
-  ],
+  "authorities": ["$XSAPPNAME.user"],
   "role-templates": [
     {
       "name": "User",
       "description": "Default user role",
-      "scope-references": [
-        "$XSAPPNAME.user"
-      ]
+      "scope-references": ["$XSAPPNAME.user"]
     }
-  ],
-  "attributes": []
+  ]
 }
