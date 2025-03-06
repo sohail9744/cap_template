@@ -1,0 +1,19 @@
+{
+  "xsappname": "testing",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.user",
+      "description": "User scope",
+      "grant-as-authority-to-apps": []
+    }
+  ],
+  "authorities": ["$XSAPPNAME.user"],
+  "role-templates": [
+    {
+      "name": "User",
+      "description": "Default user role",
+      "scope-references": ["$XSAPPNAME.user"]
+    }
+  ]
+}
